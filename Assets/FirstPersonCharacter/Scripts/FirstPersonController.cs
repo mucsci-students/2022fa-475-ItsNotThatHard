@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 //using UnityStandardAssets.CrossPlatformInput;
 //using UnityStandardAssets.Utility;
@@ -22,6 +24,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         [SerializeField] private AudioClip[] m_FootstepSounds;    // an array of footstep sounds that will be randomly selected from.
         [SerializeField] private AudioClip m_JumpSound;           // the sound played when character leaves the ground.
         [SerializeField] private AudioClip m_LandSound;           // the sound played when character touches back on ground.
+        [SerializeField] private float _interactableReachDistance = 1; // How far the player can "reach" to use interactables
 
         private Camera m_Camera;
         private bool m_Jump;
@@ -73,6 +76,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
 
             m_PreviouslyGrounded = m_CharacterController.isGrounded;
+
+            if (Input.GetButtonDown("Interact") && TryGetInteractable(out var interactable))
+            { interactable.Interact(gameObject); }
+
         }
 
 
@@ -81,6 +88,22 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_AudioSource.clip = m_LandSound;
             m_AudioSource.Play();
             m_NextStep = m_StepCycle + .5f;
+        }
+
+
+        private bool TryGetInteractable(out IInteractable interactable)
+        {
+
+            // Look for interactables
+            RaycastHit[] outHit = Physics.RaycastAll(m_Camera.transform.position, m_Camera.transform.forward, _interactableReachDistance);
+            interactable = outHit
+                .Select((hit) => hit.transform.gameObject)
+                .Where((gameObject) => gameObject != null && gameObject.transform.GetComponentInChildren<IInteractable>() != null)
+                .FirstOrDefault()
+                ?.GetComponentInChildren<IInteractable>();
+
+            return interactable != null;
+
         }
 
 
