@@ -22,9 +22,6 @@ public class ComputerScript : MonoBehaviour, IInteractable
     /// </summary>
     public BreakerScript ControllingBreaker;
 
-    public Material OnMaterial;
-    public Material OffMaterial;
-
     public event EventHandler OnLaserGridDisabled;
     public event EventHandler OnInteracted;
     public bool HasPower { get; private set; }
@@ -40,18 +37,12 @@ public class ComputerScript : MonoBehaviour, IInteractable
     {
 
         HasPower = ControllingBreaker.BreakerIsOn;
-        GetComponent<Renderer>().material = HasPower ? OnMaterial : OffMaterial;
 
-        ControllingBreaker.OnTurnedOn += (_, _) => 
-        { 
-            HasPower = true; 
-            GetComponent<Renderer>().material = OnMaterial; 
-        };
+        ControllingBreaker.OnTurnedOn += (_, _) => { HasPower = true; };
         ControllingBreaker.OnTurnedOff += (_, _) =>
         {
             SignOut();
             HasPower = false;
-            GetComponent<Renderer>().material = OffMaterial;
         };
 
     }
