@@ -19,9 +19,11 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private Quaternion m_CharacterTargetRot;
         private Quaternion m_CameraTargetRot;
         private bool m_cursorIsLocked = true;
+        private PlayerHUD _playerHUD;
 
         public void Init(Transform character, Transform camera)
         {
+            _playerHUD = MonoBehaviour.FindObjectOfType<PlayerHUD>();
             m_CharacterTargetRot = character.localRotation;
             m_CameraTargetRot = camera.localRotation;
         }
@@ -29,8 +31,11 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         public void LookRotation(Transform character, Transform camera)
         {
-            float yRot = Input.GetAxis("Mouse X") * XSensitivity;
-            float xRot = Input.GetAxis("Mouse Y") * YSensitivity;
+            // float usingComputerClamp = _playerHUD.IsUsingComputer() ? 0f : 1f;
+            float usingComputerClamp = 1f;
+
+            float yRot = Input.GetAxis("Mouse X") * XSensitivity * usingComputerClamp;
+            float xRot = Input.GetAxis("Mouse Y") * YSensitivity * usingComputerClamp;
 
             m_CharacterTargetRot *= Quaternion.Euler (0f, yRot, 0f);
             m_CameraTargetRot *= Quaternion.Euler (-xRot, 0f, 0f);
