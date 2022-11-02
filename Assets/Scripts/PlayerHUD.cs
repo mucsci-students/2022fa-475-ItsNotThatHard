@@ -148,6 +148,7 @@ public class PlayerHUD : MonoBehaviour
     public void LogOut()
     {
 
+        DismissError();
         _activeComputer.SignOut();
         ShowLoginScreen();
 
