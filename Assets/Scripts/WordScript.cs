@@ -9,22 +9,94 @@ public class WordScript : MonoBehaviour
     public float[] oddVals = { 0.36f, 0.3f, 0.24f, 0.18f, 0.12f, 0.06f, 0f, -0.06f, -0.12f, -0.18f, -0.24f, -0.3f, -0.36f };
     public float[] evenVals = { 0.33f, 0.27f, 0.21f, 0.15f, 0.09f, 0.03f, -0.03f, -0.09f, -0.15f, -0.21f, -0.27f, -0.33f };
     public string[] words = { "ZOPPETTI", "GAMEDEV", "INTEGER", "BYTES", "BREAKOUT", "COMPUTER", "SCIENCE", "CONTROL" };
-    private float tileWidth = 1.75f;
     private char[] chars;
-    [SerializeField] private TextScript tilePrefab;
-    private TextScript[] scriptList;
+    private GameObject tilePrefab;
     private int wordLength;
     private CSRandom randVal = new CSRandom();
-    private string pickedWord;
     // Start is called before the first frame update
     void Start()
     {
-        pickedWord = words[randVal.Next(words.Length)];
-        wordLength = pickedWord.Length;
-        scriptList = new TextScript[wordLength];
-        
+        float[] coordinates;
+        string pickedWord = words[randVal.Next(words.Length)];
+        int wordLength = pickedWord.Length;
+        if (wordLength % 2 == 0)
+        {
+            if (wordLength == 6)
+            {
+                coordinates = new float[6];
+                coordinates[0] = oddVals[6];
+                coordinates[1] = oddVals[5];
+                coordinates[2] = oddVals[7];
+                coordinates[3] = oddVals[4];
+                coordinates[4] = oddVals[8];
+                coordinates[5] = oddVals[3];
+            }
+            else if (wordLength == 8)
+            {
+                coordinates = new float[8];
+                coordinates[0] = oddVals[6];
+                coordinates[1] = oddVals[5];
+                coordinates[2] = oddVals[7];
+                coordinates[3] = oddVals[4];
+                coordinates[4] = oddVals[8];
+                coordinates[5] = oddVals[3];
+                coordinates[6] = oddVals[9];
+                coordinates[7] = oddVals[2];
+            }
+            else
+            {
+                coordinates = new float[10];
+                coordinates[0] = oddVals[6];
+                coordinates[1] = oddVals[5];
+                coordinates[2] = oddVals[7];
+                coordinates[3] = oddVals[4];
+                coordinates[4] = oddVals[8];
+                coordinates[5] = oddVals[3];
+                coordinates[6] = oddVals[9];
+                coordinates[7] = oddVals[2];
+                coordinates[6] = oddVals[10];
+                coordinates[7] = oddVals[1];
+            }
+        }
+        else
+        {
+            if (wordLength == 5)
+            {
+                coordinates = new float[5];
+                coordinates[0] = oddVals[6];
+                coordinates[1] = oddVals[7];
+                coordinates[2] = oddVals[5];
+                coordinates[3] = oddVals[8];
+                coordinates[4] = oddVals[4];
+            }
+            else if (wordLength == 7)
+            {
+                coordinates = new float[7];
+                coordinates[0] = oddVals[6];
+                coordinates[1] = oddVals[7];
+                coordinates[2] = oddVals[5];
+                coordinates[3] = oddVals[8];
+                coordinates[4] = oddVals[4];
+                coordinates[5] = oddVals[9];
+                coordinates[6] = oddVals[3];
+            }
+            else
+            {
+                coordinates = new float[9];
+                coordinates[0] = oddVals[6];
+                coordinates[1] = oddVals[7];
+                coordinates[2] = oddVals[5];
+                coordinates[3] = oddVals[8];
+                coordinates[4] = oddVals[4];
+                coordinates[5] = oddVals[9];
+                coordinates[6] = oddVals[3];
+                coordinates[7] = oddVals[10];
+                coordinates[8] = oddVals[2];
+            }
+        }
+        chars = new char[wordLength];
         chars = pickedWord.ToCharArray();
-        SpawnTiles();
+        SpawnTiles(coordinates);
     }
 
     // Update is called once per frame
@@ -42,32 +114,19 @@ public class WordScript : MonoBehaviour
         return '-';
     }
 
-    public void SpawnTiles()
+    public void SpawnTiles(float[] coordinates)
     {
-        for (int i = 0; i < chars.Length; i++)
-        {
-            var spawnTile = Instantiate(tilePrefab);
-            scriptList[i] = spawnTile;
-            spawnTile.transform.parent = transform;
-            spawnTile.transform.localPosition = new Vector3 (-tileWidth * i, 0, 0);
-            spawnTile.AssignChar (chars[i]);
-        }
-        float offSet = (-wordLength * tileWidth) / 2;
-        Vector3 currentPos = transform.position;
-        currentPos.x -= offSet;
-        transform.position = currentPos;
-
-        /*
         int[] idArray = new int[10];
-        TextScript temp;
-        for (int i = 0; i < wordLength; i++)
+        GameObject temp;
+        if (wordLength % 2 == 0)
         {
-            idArray[i] = i;
-            // Vector3 spawnPos = new Vector3(?, 1f, 0f);
-            temp = Instantiate(tilePrefab, spawnPos, Quaternion.identity);
-            temp.transform.position = spawnPos;
-            temp.AssignChar(chars[i]);
+            for (int i = 0; i < wordLength; i++)
+            {
+                idArray[0] = i;
+                Vector3 spawnPos = new Vector3(coordinates[i], 1f, 0f);
+                temp = Instantiate(tilePrefab) as GameObject;
+                temp.transform.position = spawnPos;
+            }
         }
-        */
     }
 }

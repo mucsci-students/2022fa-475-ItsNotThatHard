@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityStandardAssets.Characters.FirstPerson;
+using UObject = UnityEngine.Object;
 
 public class ComputerScript : MonoBehaviour, IInteractable
 {
@@ -25,8 +25,6 @@ public class ComputerScript : MonoBehaviour, IInteractable
     public Material OnMaterial;
     public Material OffMaterial;
 
-    private PlayerHUD _playerHUD;
-
     public event EventHandler OnLaserGridDisabled;
     public event EventHandler OnInteracted;
     public bool HasPower { get; private set; }
@@ -38,13 +36,8 @@ public class ComputerScript : MonoBehaviour, IInteractable
 
     private bool IsAuthenticated() => _authenticatedUser != null;
 
-    public string GetAuthenticatedUserFullName() => _authenticatedUser.FullName;
-    public string GetAuthenticatedUserFrontPageText() => _authenticatedUser.FontPageText;
-
     public void Start()
     {
-
-        _playerHUD = FindObjectOfType<PlayerHUD>();
 
         HasPower = ControllingBreaker.BreakerIsOn;
         GetComponent<Renderer>().material = HasPower ? OnMaterial : OffMaterial;
@@ -100,19 +93,16 @@ public class ComputerScript : MonoBehaviour, IInteractable
 
     public void SignOut() => _authenticatedUser = null;
 
-    public bool DisableLaserGrid()
+    public void DisableLaserGrid()
     {
 
         if (CanDisableLaserGrid()) 
-        {
-
-            Destroy(LaserGrid);
+        { 
+            
+            UObject.Destroy(LaserGrid);
             OnLaserGridDisabled?.Invoke(_authenticatedUser.Username, EventArgs.Empty);
-            return true;
 
         }
-
-        return false;
 
     }
 
@@ -120,16 +110,7 @@ public class ComputerScript : MonoBehaviour, IInteractable
 
     public void Interact(GameObject interactor)
     {
-
-        FirstPersonController controller = interactor.GetComponentInChildren<FirstPersonController>();
-        if (_playerHUD != null && controller != null && HasPower)
-        {
-            _playerHUD.OpenComputer(this);
-
-        }
-
-        else if (_playerHUD != null) { _playerHUD.ShowThought("It looks like this computer isn't getting power"); }
-
+        throw new NotImplementedException();
     }
 
 }
