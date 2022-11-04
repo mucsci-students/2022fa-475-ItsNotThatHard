@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using CSRandom = System.Random;
 
@@ -23,7 +24,7 @@ public class WordScript : MonoBehaviour
         wordLength = pickedWord.Length;
         scriptList = new TextScript[wordLength];
         
-        chars = pickedWord.ToCharArray();
+        chars = pickedWord.ToCharArray().Shuffle();
         SpawnTiles();
     }
 
@@ -31,15 +32,6 @@ public class WordScript : MonoBehaviour
     void Update()
     {
         
-    }
-
-    public char GetLetter (int iD)
-    {
-        if (iD < wordLength)
-        {
-            return chars[iD];
-        }
-        return '-';
     }
 
     public void SpawnTiles()
@@ -51,23 +43,31 @@ public class WordScript : MonoBehaviour
             spawnTile.transform.parent = transform;
             spawnTile.transform.localPosition = new Vector3 (-tileWidth * i, 0, 0);
             spawnTile.AssignChar (chars[i]);
+            spawnTile.OnInteracted += OnTileInteracted;
         }
         float offSet = (-wordLength * tileWidth) / 2;
         Vector3 currentPos = transform.position;
         currentPos.x -= offSet;
         transform.position = currentPos;
 
-        /*
-        int[] idArray = new int[10];
-        TextScript temp;
-        for (int i = 0; i < wordLength; i++)
+        
+    }
+
+    private string getUserWord ()
+    {
+        var currentChar = scriptList.Select((currentTile) => currentTile.letterText.text.ToCharArray()[0]).ToArray();
+        return new string(currentChar);
+    }
+
+    private void OnTileInteracted(object sender, EventArgs args)
+    {
+        if (getUserWord() == pickedWord)
         {
-            idArray[i] = i;
-            // Vector3 spawnPos = new Vector3(?, 1f, 0f);
-            temp = Instantiate(tilePrefab, spawnPos, Quaternion.identity);
-            temp.transform.position = spawnPos;
-            temp.AssignChar(chars[i]);
+            print("Puzzle solved!");
         }
-        */
+        else
+        {
+            print(getUserWord());
+        }
     }
 }

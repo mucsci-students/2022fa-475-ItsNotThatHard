@@ -26,6 +26,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
         [SerializeField] private float _interactableReachDistance = 1.6f; // How far the player can "reach" to use interactables
         [SerializeField] private GameObject _deathCamera; // GameObject that is spawned at the player's location when the player is killed
 
+        public TextScript lastClickedTile;
+
         private Camera m_Camera;
         private bool m_Jump;
         private float m_YRotation;

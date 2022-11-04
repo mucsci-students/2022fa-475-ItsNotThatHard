@@ -113,6 +113,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tileID: 0
   letterText: {fileID: 6822603646991709360}
+  selectedMaterial: {fileID: 2100000, guid: 3410a6ec62103a14a853c935233f5e0f, type: 2}
+  normalMaterial: {fileID: 2100000, guid: fa57413cf5cd79e42a506932c4c56eb5, type: 2}
 --- !u!1 &5936746156002399112
 GameObject:
   m_ObjectHideFlags: 0
