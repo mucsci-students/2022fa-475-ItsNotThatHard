@@ -2,6 +2,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.IO;
+using System;
 
 public class PlayerHUD : MonoBehaviour
 {
@@ -10,6 +12,9 @@ public class PlayerHUD : MonoBehaviour
     [SerializeField] private Canvas _gameOverScreen;
     [SerializeField] private Canvas _authScreen;
     [SerializeField] private Canvas _desktop;
+    [SerializeField] private Canvas _pauseScreen;
+    [SerializeField] private Canvas _victoryScreen;
+    [SerializeField] private TMP_Text _timeCallout;
     [SerializeField] private AudioSource _hawHaw;
     [SerializeField] private Button _retryButton;
     [SerializeField] private TMP_InputField _usernameField;
@@ -24,11 +29,24 @@ public class PlayerHUD : MonoBehaviour
     [SerializeField] private Button _errorDismissButton;
     [SerializeField] private AudioClip _noPermissionsJingle;
     [SerializeField] private TMP_Text _thoughtText;
+    [SerializeField] private string _initialThoughtText = "Where am I? I need to get out of here...";
     private BasicAudioManagerScript _audioManager;
 
     private ComputerScript _activeComputer;
+    private JukeBoxScript _jukeBox;
 
-    public void Start() => _audioManager = FindObjectOfType<BasicAudioManagerScript>();
+    private const string _saveFileName = "playersave.itstoohard";
+
+    public void Start()
+    {
+        
+        _audioManager = FindObjectOfType<BasicAudioManagerScript>();
+        _jukeBox = FindObjectOfType<JukeBoxScript>();
+        Invoke(nameof(ShowInitialThought), 0.5f);
+
+    }
+
+    private void ShowInitialThought() => ShowThought(_initialThoughtText);
 
     public void ShowGameOverScreen()
     {
@@ -41,6 +59,88 @@ public class PlayerHUD : MonoBehaviour
 
         Invoke(nameof(HawHaw), 1);
 
+        if (_jukeBox != null) { _jukeBox.Silence(); }
+
+    }
+
+    public void ShowPauseScreen()
+    {
+
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+
+        _pauseScreen.gameObject.SetActive(true);
+
+    }
+
+    public void HidePauseScreen()
+    {
+
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Confined;
+
+        _pauseScreen.gameObject.SetActive(false);
+
+    }
+
+    public void ShowVictoryScreen()
+    {
+
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
+
+        _victoryScreen.gameObject.SetActive(true);
+
+        double currentTime = Time.timeSinceLevelLoadAsDouble;
+        bool hasBestScore = TryGetBestScore(out var bestSoFar);
+        if ((hasBestScore && bestSoFar > currentTime) || !hasBestScore)
+        {
+
+            SaveBestScore(bestSoFar = currentTime);
+
+        }
+
+        else { }
+
+        _timeCallout.text = $"Your Time: {(long)currentTime} Second(s)\nBest Time: {(long)bestSoFar} Second(s)";
+
+    }
+
+    public bool TryGetBestScore(out double highScore)
+    {
+
+        highScore = double.NaN;
+
+        try
+        {
+            
+            byte[] data = File.ReadAllBytes(_saveFileName);
+            if (data.Length != 8) { return false; }
+
+            highScore = BitConverter.ToDouble(data, 0);
+            return true;
+
+        }
+        
+        catch (Exception _) {  }
+
+        return false;
+
+    }
+
+    public void SaveBestScore(double newScore)
+    {
+
+        try
+        {
+
+            var bytes = BitConverter.GetBytes(newScore);
+            File.WriteAllBytes(_saveFileName, bytes);
+
+        }
+
+        catch (Exception _) {  }
+
     }
 
     public void OnRetryButtonClicked()
@@ -50,6 +150,8 @@ public class PlayerHUD : MonoBehaviour
         SceneManager.LoadScene(currentSceneIndex);
 
     }
+
+    public void OnQuitButtonClicked() => Application.Quit();
 
     public void OpenComputer(ComputerScript toOpen)
     {
@@ -89,7 +191,10 @@ public class PlayerHUD : MonoBehaviour
 
     }
 
-    public bool IsUsingComputer() => _authScreen.gameObject.active || _desktop.gameObject.active;
+    public bool PauseScreenUp() => _pauseScreen.gameObject.active;
+
+    public bool IsBlockingInput() 
+        => _authScreen.gameObject.active || _desktop.gameObject.active || PauseScreenUp() || _victoryScreen.gameObject.active;
 
     public void TryAuthenticate()
     {
@@ -160,6 +265,7 @@ public class PlayerHUD : MonoBehaviour
         _thoughtText.text = thoughtText;
         _thoughtText.gameObject.SetActive(true);
 
+        CancelInvoke();
         Invoke(nameof(HideThought), duration);
 
     }

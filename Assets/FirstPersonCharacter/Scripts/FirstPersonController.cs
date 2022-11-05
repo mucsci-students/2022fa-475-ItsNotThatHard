@@ -23,6 +23,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         [SerializeField] private AudioClip[] m_FootstepSounds;    // an array of footstep sounds that will be randomly selected from.
         [SerializeField] private AudioClip m_JumpSound;           // the sound played when character leaves the ground.
         [SerializeField] private AudioClip m_LandSound;           // the sound played when character touches back on ground.
+        [SerializeField] private AudioClip _noInteractableSound;           
         [SerializeField] private float _interactableReachDistance = 1.6f; // How far the player can "reach" to use interactables
         [SerializeField] private GameObject _deathCamera; // GameObject that is spawned at the player's location when the player is killed
 
@@ -41,7 +42,18 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private float m_NextStep;
         private bool m_Jumping;
         private AudioSource m_AudioSource;
-        private PlayerHUD _playerHUD;
+        public PlayerHUD _playerHUD { get; private set; }
+
+        private string[] _noInteractableThoughts = new string[]
+        {
+
+        "Can't use that",
+        "I can't use that",
+        "Nothing to interact with",
+        "Can't interact with that",
+        "I can't interact with that",
+
+        };
 
         // Use this for initialization
         private void Start()
@@ -62,7 +74,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private void Update()
         {
 
-            if (_playerHUD == null || !_playerHUD.IsUsingComputer())
+            if (_playerHUD == null || !_playerHUD.IsBlockingInput())
             {
 
                 RotateView();
@@ -87,7 +99,23 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 if (Input.GetButtonDown("Interact") && TryGetInteractable(out var interactable))
                 { interactable.Interact(gameObject); }
 
+                else if (Input.GetButtonDown("Interact") && !TryGetInteractable(out var _))
+                { 
+                    
+                    m_AudioSource.PlayOneShot(_noInteractableSound);
+                    _playerHUD.ShowThought(_noInteractableThoughts[Random.Range(0, _noInteractableThoughts.Length)], 1.5f);
+
+                }
+
+                if (Input.GetButtonDown("Cancel"))
+                { _playerHUD.ShowPauseScreen(); }
+
             }
+
+            /*
+            else if (_playerHUD != null && _playerHUD.IsBlockingInput() && _playerHUD.PauseScreenUp() && Input.GetButtonDown("Cancel"))
+            { _playerHUD.HidePauseScreen(); }
+            */
             
             m_PreviouslyGrounded = m_CharacterController.isGrounded;
 
@@ -120,7 +148,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         private void FixedUpdate()
         {
-            if (_playerHUD == null || !_playerHUD.IsUsingComputer())
+            if (_playerHUD == null || !_playerHUD.IsBlockingInput())
             {
                 float speed;
                 GetInput(out speed);
