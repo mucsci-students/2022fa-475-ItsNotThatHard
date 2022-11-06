@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class WireSpin : MonoBehaviour
 {
+    public float startRotate = 0f;
+    void Start(){
+        gameObject.transform.Rotate(0.0f, startRotate, 0.0f);
+    }
     public float timer = 2f;
     private float elapsedTime = 0f;
 
