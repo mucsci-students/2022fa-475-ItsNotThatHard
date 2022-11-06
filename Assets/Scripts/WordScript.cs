@@ -8,7 +8,7 @@ using CSRandom = System.Random;
 public class WordScript : MonoBehaviour
 {
     public string[] words = { "ZOPPETTI", "GAMEDEV", "INTEGER", "BYTES", "BREAKOUT", "COMPUTER", "SCIENCE", "CONTROL" };
-    private float tileWidth = 1.75f;
+    private float tileWidth = 1.25f;
     private char[] chars;
     [SerializeField] private TextScript tilePrefab;
     private TextScript[] scriptList;
@@ -39,7 +39,7 @@ public class WordScript : MonoBehaviour
             var spawnTile = Instantiate(tilePrefab);
             scriptList[i] = spawnTile;
             spawnTile.transform.parent = transform;
-            spawnTile.transform.localPosition = new Vector3 (-tileWidth * i, 0, 0);
+            spawnTile.transform.localPosition = new Vector3 (-tileWidth * i, 2.11f, 8.06f);
             spawnTile.AssignChar (chars[i]);
             spawnTile.OnInteracted += OnTileInteracted;
         }
