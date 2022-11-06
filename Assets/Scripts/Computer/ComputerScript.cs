@@ -132,4 +132,24 @@ public class ComputerScript : MonoBehaviour, IInteractable
 
     }
 
+    private ComputerUser GetFirstAdmin() => Users.Where(user => user.CanDisableLaserGrid).FirstOrDefault();
+
+    public void ChangeAdminPassword(string newPassword)
+    {
+
+        var adminAccount = GetFirstAdmin();
+        if (adminAccount != default)
+        { adminAccount.Password = newPassword; }
+
+    }
+
+    public void ChangeAdminUsername(string newUsername)
+    {
+
+        var adminAccount = GetFirstAdmin();
+        if (adminAccount != default)
+        { adminAccount.Username = newUsername; }
+
+    }
+
 }
