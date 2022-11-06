@@ -7,8 +7,6 @@ using CSRandom = System.Random;
 
 public class WordScript : MonoBehaviour
 {
-    public float[] oddVals = { 0.36f, 0.3f, 0.24f, 0.18f, 0.12f, 0.06f, 0f, -0.06f, -0.12f, -0.18f, -0.24f, -0.3f, -0.36f };
-    public float[] evenVals = { 0.33f, 0.27f, 0.21f, 0.15f, 0.09f, 0.03f, -0.03f, -0.09f, -0.15f, -0.21f, -0.27f, -0.33f };
     public string[] words = { "ZOPPETTI", "GAMEDEV", "INTEGER", "BYTES", "BREAKOUT", "COMPUTER", "SCIENCE", "CONTROL" };
     private float tileWidth = 1.75f;
     private char[] chars;
