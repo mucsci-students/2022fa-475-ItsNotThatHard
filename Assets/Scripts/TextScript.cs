@@ -14,6 +14,8 @@ public class TextScript : MonoBehaviour, IInteractable
     public event EventHandler OnInteracted;
     public Material selectedMaterial;
     public Material normalMaterial;
+    public Material solvedMaterial;
+    public bool IsSolved = false;
 
 
     // Start is called before the first frame update
@@ -25,7 +27,10 @@ public class TextScript : MonoBehaviour, IInteractable
     // Update is called once per frame
     void Update()
     {
-        
+        if (IsSolved)
+        {
+            GetComponent<Renderer>().material = solvedMaterial;
+        }
     }
 
     // Assign this tile's letter
@@ -47,6 +52,7 @@ public class TextScript : MonoBehaviour, IInteractable
 
     public void Interact (GameObject interactor)
     {
+        if (IsSolved || interactor == null) return;
         var controller = interactor.GetComponentInChildren<FirstPersonController>();
         if (controller != null)
         {

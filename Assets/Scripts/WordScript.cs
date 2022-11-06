@@ -61,7 +61,10 @@ public class WordScript : MonoBehaviour
     {
         if (getUserWord() == pickedWord)
         {
-            print("Puzzle solved!");
+            for (int i = 0; i < chars.Length; i++)
+            {
+                scriptList[i].IsSolved = true;
+            }
         }
         else
         {

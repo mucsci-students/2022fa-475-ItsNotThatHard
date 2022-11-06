@@ -115,6 +115,8 @@ MonoBehaviour:
   letterText: {fileID: 6822603646991709360}
   selectedMaterial: {fileID: 2100000, guid: 3410a6ec62103a14a853c935233f5e0f, type: 2}
   normalMaterial: {fileID: 2100000, guid: fa57413cf5cd79e42a506932c4c56eb5, type: 2}
+  solvedMaterial: {fileID: 2100000, guid: b9bf645ad0007034ca27c3f8f399b1b7, type: 2}
+  IsSolved: 0
 --- !u!1 &5936746156002399112
 GameObject:
   m_ObjectHideFlags: 0
