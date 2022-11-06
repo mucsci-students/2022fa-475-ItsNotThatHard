@@ -29,6 +29,12 @@ public class PlayerHUD : MonoBehaviour
     [SerializeField] private Button _errorDismissButton;
     [SerializeField] private AudioClip _noPermissionsJingle;
     [SerializeField] private TMP_Text _thoughtText;
+    
+    [SerializeField] private Canvas _bullsCowsScreen;
+    [SerializeField] private TMP_Text _bullsCowsText;
+    [SerializeField] private TMP_InputField _bullsCowsGuessField;
+    private BullsCowsGame _bullsCowsGame;
+
     [SerializeField] private string _initialThoughtText = "Where am I? I need to get out of here...";
     private BasicAudioManagerScript _audioManager;
 
@@ -194,7 +200,8 @@ public class PlayerHUD : MonoBehaviour
     public bool PauseScreenUp() => _pauseScreen.gameObject.active;
 
     public bool IsBlockingInput() 
-        => _authScreen.gameObject.active || _desktop.gameObject.active || PauseScreenUp() || _victoryScreen.gameObject.active;
+        => _authScreen.gameObject.active || _desktop.gameObject.active || 
+        PauseScreenUp() || _victoryScreen.gameObject.active || _bullsCowsScreen.gameObject.active;
 
     public void TryAuthenticate()
     {
@@ -277,6 +284,47 @@ public class PlayerHUD : MonoBehaviour
 
         _hawHaw.enabled = true;
         _hawHaw.Play();
+
+    }
+
+    public void StartBullsCows(BullsCowsGame game)
+    {
+
+        _bullsCowsGame = game;
+        _bullsCowsScreen.gameObject.SetActive(true);
+
+        _bullsCowsGuessField.text = "";
+        _bullsCowsText.text = $"({_bullsCowsGame.GetDigitCount()} Digit(s))\nB: ??\nC: ??";
+
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
+
+    }
+
+    public void OnExitBullsCows()
+    {
+
+        _bullsCowsGame = null;
+        _bullsCowsScreen.gameObject.SetActive(false);
+        
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+
+    }
+
+    public void OnBullsCowsGuessButtonClicked()
+    {
+
+        if (_bullsCowsGame != null)
+        {
+
+            string guess = _bullsCowsGuessField.text;
+            _bullsCowsGuessField.text = "";
+
+            var bullsCows = _bullsCowsGame.Guess(guess);
+            _bullsCowsText.text = $"({_bullsCowsGame.GetDigitCount()} Digit(s))\nB: {bullsCows.bulls}\nC: {bullsCows.cows}";
+
+        }
 
     }
 
