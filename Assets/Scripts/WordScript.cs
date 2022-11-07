@@ -15,6 +15,9 @@ public class WordScript : MonoBehaviour
     private int wordLength;
     private CSRandom randVal = new CSRandom();
     private string pickedWord;
+
+    public ComputerScript TargetComputer;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,21 +37,30 @@ public class WordScript : MonoBehaviour
 
     public void SpawnTiles()
     {
+
+        // NOTE: Parent's scale is assumed to be uniform
+        float parentScaleModifier = transform.localScale.x;
+
         for (int i = 0; i < chars.Length; i++)
         {
             var spawnTile = Instantiate(tilePrefab);
             scriptList[i] = spawnTile;
             spawnTile.transform.parent = transform;
-            spawnTile.transform.localPosition = new Vector3 (-tileWidth * i, 2.11f, 8.06f);
-            spawnTile.AssignChar (chars[i]);
+            spawnTile.transform.localPosition = new Vector3(-tileWidth * i, 0.0f, 0.0f);
+            spawnTile.transform.localRotation = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f);
+            spawnTile.transform.localScale = new Vector3(1.0f, 1.0f, 0.3f);
+            spawnTile.AssignChar(chars[i]);
             spawnTile.OnInteracted += OnTileInteracted;
         }
-        float offSet = (-wordLength * tileWidth) / 2;
+
+        var firstTileLocation = scriptList[0].transform.localPosition.x;
+        var lastTileLocation = scriptList[scriptList.Length - 1].transform.localPosition.x;
+
+        float offSet = (lastTileLocation - firstTileLocation) / 2 * parentScaleModifier;
         Vector3 currentPos = transform.position;
-        currentPos.x -= offSet;
+        currentPos.z -= offSet;
         transform.position = currentPos;
 
-        
     }
 
     private string getUserWord ()
@@ -65,6 +77,10 @@ public class WordScript : MonoBehaviour
             {
                 scriptList[i].IsSolved = true;
             }
+
+            // Set the computer password so the user HAS to unscramble it first
+            TargetComputer.ChangeAdminPassword(pickedWord);
+
         }
         else
         {
