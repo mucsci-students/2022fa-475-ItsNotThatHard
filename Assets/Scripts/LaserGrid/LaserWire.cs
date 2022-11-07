@@ -13,9 +13,14 @@ public class LaserWire : MonoBehaviour
     public bool HasPower { get; private set; }
      float elapsedTime = 0f;
 
+    private ParticleSystem ps;
+    private BoxCollider killerBox;
+
     void Start()
     {
-        ParticleSystem ps = GetComponent<ParticleSystem>();
+        ps = GetComponent<ParticleSystem>();
+        killerBox = GetComponent<BoxCollider>();
+
         HasPower = ControllingBreaker.BreakerIsOn;
         ControllingBreaker.OnTurnedOn += (_, _) => 
         { 
@@ -28,35 +33,37 @@ public class LaserWire : MonoBehaviour
         };
     }
 
-    void Update(){
-        ParticleSystem ps = GetComponent<ParticleSystem>();
-        count = 0;
-        for(int i = 0; 8 > i; i++) {
-            if( ( wires[i].transform.localRotation.y == 0) ) {
-                count++;
-            }
+    void EnableLaserGrid(bool enabled)
+    {
+
+        bool gridEnabled = killerBox.enabled && ps.isPlaying;
+
+        if (enabled != gridEnabled)
+        {
+
+            killerBox.enabled = enabled;
+
+            if (enabled) { ps.Play(); }
+
+            else { ps.Stop(); }
+
         }
+
+    }
+
+    void Update() {
+        
+        bool wiresPositionedCorrectly = wires.Where(wire => wire.transform.rotation.y == 0).Count() == 8;
+        
         elapsedTime = 0f;
-        while (elapsedTime < 2f) {
+        while (elapsedTime < 2f)
+        {
             elapsedTime += Time.deltaTime;
         }
-        if(count == 8 && HasPower == false){
-            GetComponent<BoxCollider>().enabled = true;
-            ps.Play();
-            count = 0;
-        } else if (count != 8 && HasPower == false) {
-            GetComponent<BoxCollider>().enabled = true;
-            ps.Play();
-            count = 0;
-        } else if(count == 8 && HasPower == true){
-            GetComponent<BoxCollider>().enabled = false;
-            ps.Stop();
-            count = 0;
-        } else if (count != 8 && HasPower == true) {
-            GetComponent<BoxCollider>().enabled = true;
-            ps.Play();
-            count = 0;
-        }
+
+        bool laserGridShouldBeOn = !(wiresPositionedCorrectly && HasPower);
+        EnableLaserGrid(laserGridShouldBeOn);
+
     }
 
 }

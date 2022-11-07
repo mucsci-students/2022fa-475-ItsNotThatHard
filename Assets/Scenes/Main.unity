@@ -1032,6 +1032,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 716964319906602919, guid: 53b40579fd75c5a479ef4a87142bbd5a, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3238721583707321251, guid: 53b40579fd75c5a479ef4a87142bbd5a, type: 3}
       propertyPath: ControllingBreaker
       value: 
@@ -7376,7 +7380,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3251445434938902563, guid: ae810998588fe8a4a9dca63dc2b60ba9, type: 3}
       propertyPath: BreakerIsOn
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3251445434938902563, guid: ae810998588fe8a4a9dca63dc2b60ba9, type: 3}
       propertyPath: CurrentInteractableState
