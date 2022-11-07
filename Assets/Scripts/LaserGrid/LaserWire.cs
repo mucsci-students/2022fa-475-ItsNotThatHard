@@ -11,6 +11,7 @@ public class LaserWire : MonoBehaviour
     public GameObject[] wires = new GameObject[8];
     public BreakerScript ControllingBreaker;
     public bool HasPower { get; private set; }
+     float elapsedTime = 0f;
 
     void Start()
     {
@@ -34,6 +35,10 @@ public class LaserWire : MonoBehaviour
             if( ( wires[i].transform.localRotation.y == 0) ) {
                 count++;
             }
+        }
+        elapsedTime = 0f;
+        while (elapsedTime < 2f) {
+            elapsedTime += Time.deltaTime;
         }
         if(count == 8 && HasPower == false){
             GetComponent<BoxCollider>().enabled = true;
