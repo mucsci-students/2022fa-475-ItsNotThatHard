@@ -199,6 +199,26 @@ PrefabInstance:
       propertyPath: BreakerIsOn
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3280350035040327834, guid: ae810998588fe8a4a9dca63dc2b60ba9, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5026185293341474523, guid: ae810998588fe8a4a9dca63dc2b60ba9, type: 3}
+      propertyPath: ControllingBreaker
+      value: 
+      objectReference: {fileID: 16221819}
+    - target: {fileID: 5538151836917165741, guid: ae810998588fe8a4a9dca63dc2b60ba9, type: 3}
+      propertyPath: ControllingBreaker
+      value: 
+      objectReference: {fileID: 16221819}
+    - target: {fileID: 6442878702194281847, guid: ae810998588fe8a4a9dca63dc2b60ba9, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6442878702194281847, guid: ae810998588fe8a4a9dca63dc2b60ba9, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ae810998588fe8a4a9dca63dc2b60ba9, type: 3}
 --- !u!114 &16221819 stripped
@@ -1011,7 +1031,7 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1232198512757030691, guid: 53b40579fd75c5a479ef4a87142bbd5a, type: 3}
+    - target: {fileID: 0}
       propertyPath: ControllingBreaker
       value: 
       objectReference: {fileID: 850115691}
@@ -1067,8 +1087,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 1232198512757030691, guid: 53b40579fd75c5a479ef4a87142bbd5a, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 53b40579fd75c5a479ef4a87142bbd5a, type: 3}
 --- !u!1001 &953231847
 PrefabInstance:
@@ -1278,6 +1297,14 @@ PrefabInstance:
       propertyPath: BreakerIsOn
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5026185293341474523, guid: ae810998588fe8a4a9dca63dc2b60ba9, type: 3}
+      propertyPath: ControllingBreaker
+      value: 
+      objectReference: {fileID: 850115691}
+    - target: {fileID: 5538151836917165741, guid: ae810998588fe8a4a9dca63dc2b60ba9, type: 3}
+      propertyPath: ControllingBreaker
+      value: 
+      objectReference: {fileID: 850115691}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ae810998588fe8a4a9dca63dc2b60ba9, type: 3}
 --- !u!1 &1111678909 stripped
@@ -7004,12 +7031,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3251445434938902563, guid: ae810998588fe8a4a9dca63dc2b60ba9, type: 3}
       propertyPath: BreakerIsOn
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3251445434938902563, guid: ae810998588fe8a4a9dca63dc2b60ba9, type: 3}
       propertyPath: CurrentInteractableState
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5026185293341474523, guid: ae810998588fe8a4a9dca63dc2b60ba9, type: 3}
+      propertyPath: ControllingBreaker
+      value: 
+      objectReference: {fileID: 1890810414}
+    - target: {fileID: 5538151836917165741, guid: ae810998588fe8a4a9dca63dc2b60ba9, type: 3}
+      propertyPath: ControllingBreaker
+      value: 
+      objectReference: {fileID: 1890810414}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ae810998588fe8a4a9dca63dc2b60ba9, type: 3}
 --- !u!114 &1890810414 stripped
@@ -7586,7 +7621,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6e0c8b7adbd8a747a9e073645ca6525, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startRotate: 180
+  startRotate: 0
   timer: 2
 --- !u!135 &90405991592165203
 SphereCollider:
@@ -8744,7 +8779,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6663490806154214503, guid: 9516e028fe014084c820786790ac266c, type: 3}
   m_PrefabInstance: {fileID: 1351414168332415352}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1351414168332415357
+--- !u!114 &1351414168332415361
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8758,6 +8793,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startRotate: 0
   timer: 2
+--- !u!135 &1351414168332415362
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 868547321}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.9156398
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1458695298995792661
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8894,7 +8942,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6e0c8b7adbd8a747a9e073645ca6525, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startRotate: 90
+  startRotate: 0
   timer: 2
 --- !u!135 &1565637178675316336
 SphereCollider:
@@ -9479,7 +9527,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6e0c8b7adbd8a747a9e073645ca6525, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startRotate: 90
+  startRotate: 0
   timer: 2
 --- !u!135 &2359294310568703977
 SphereCollider:
@@ -9568,7 +9616,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6e0c8b7adbd8a747a9e073645ca6525, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startRotate: 270
+  startRotate: 0
   timer: 2
 --- !u!135 &2504476563197672126
 SphereCollider:
@@ -10885,7 +10933,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8723138107824360349, guid: f89af8a8dcf52b74e80241250eea549a, type: 3}
   m_PrefabInstance: {fileID: 4014543966362756831}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4014543966362756836
+--- !u!114 &4014543966362756840
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10897,8 +10945,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6e0c8b7adbd8a747a9e073645ca6525, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startRotate: 90
+  startRotate: 0
   timer: 2
+--- !u!135 &4014543966362756841
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1733640679}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.9156398
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &4029020061140622530
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11643,7 +11704,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1112009354433304791, guid: a56049f633b5d6c41bf8a5cabb18c88f, type: 3}
   m_PrefabInstance: {fileID: 4744242102485427566}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4744242102485427571
+--- !u!114 &4744242102485427575
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -11657,6 +11718,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startRotate: 0
   timer: 2
+--- !u!135 &4744242102485427576
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 19408432}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.9156402
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &4787347981843614320
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12164,7 +12238,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6e0c8b7adbd8a747a9e073645ca6525, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startRotate: 180
+  startRotate: 0
   timer: 2
 --- !u!135 &5424010265506325964
 SphereCollider:
@@ -12885,7 +12959,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6e0c8b7adbd8a747a9e073645ca6525, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startRotate: 90
+  startRotate: 0
   timer: 2
 --- !u!135 &5849741800307484440
 SphereCollider:
@@ -12898,7 +12972,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1.9156398
+  m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &5884737316092748288
 PrefabInstance:
@@ -13098,7 +13172,14 @@ MonoBehaviour:
   - FullName: Sadie Fischer
     Username: TempGirl
     Password: 230217
-    FontPageText: 
+    FontPageText: "Sadie is a really happy, outgoing, and optimistic girl. Sadie
+      is one that sees the good in everything and everyone. She loves to talk with
+      people. And get to know them. She\u2019s quick to help someone when they need
+      help and provide emotional support. However she can  get mad and sad just like
+      anybody else. But cause her energy enhances those emotions when she is angry
+      or sad she tends to be a bit more extreme with how she responds to things. 
+      Making her mad or sad isn\u2019t easy but when it does happen it\u2019s gigantic
+      outbursts she cant control."
     CanDisableLaserGrid: 0
   - FullName: Gary Zoppetti
     Username: Zoppetti
