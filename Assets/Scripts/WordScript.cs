@@ -56,7 +56,7 @@ public class WordScript : MonoBehaviour
         var firstTileLocation = scriptList[0].transform.localPosition.x;
         var lastTileLocation = scriptList[scriptList.Length - 1].transform.localPosition.x;
 
-        float offSet = (lastTileLocation - firstTileLocation) / 2 * parentScaleModifier;
+        float offSet = (firstTileLocation - lastTileLocation) / 2 * parentScaleModifier;
         Vector3 currentPos = transform.position;
         currentPos.z -= offSet;
         transform.position = currentPos;
