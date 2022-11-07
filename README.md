@@ -3,7 +3,7 @@
 You awake in a strange room. You don't know how you got here, but you need to find out how to get out!
 
 ## Getting Started
-To download the game, go to the releases section (on the right) and download the latest release for your OS. Extract the .zip and enjoy!
+To download the game, [go to the releases section](https://github.com/mucsci-students/2022fa-475-ItsNotThatHard/releases) (on the right) and download the latest release for your OS. Extract the .zip and enjoy!
 
 ## Controls
 **WASD**: Move<br />
